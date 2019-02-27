@@ -13,6 +13,9 @@ else()
     set(MMDB_LIBTYPE SHARED)
 endif()
 
+add_library(mmdb ${MMDB_LIBTYPE} ${MMDB_SOURCES})
+set_property(TARGET mmdb PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 if(WIN32)
     set(MMDB_INCLUDE_DIRECTORIES src include projects/VS12)
     target_link_libraries(mmdb ws2_32)
@@ -27,9 +30,6 @@ else(WIN32)
 endif()
 
 include_directories(${MMDB_INCLUDE_DIRECTORIES})
-
-add_library(mmdb ${MMDB_LIBTYPE} ${MMDB_SOURCES})
-set_property(TARGET mmdb PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 if(OSX_UNIVERSAL_BINARIES)
     set_target_properties(mmdb PROPERTIES OSX_ARCHITECTURES "i386;x86_64")
